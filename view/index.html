@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Vision - ExpressJS</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../css/materialize.min.css"  media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+  <body>
+    <div class="navbar-fixed">
+      <ul id="dropdown_accounts" class="dropdown-content">
+        <li><a href="#">Users</a></li>
+        <li><a href="#">Groups</a></li>
+      </ul>
+      <ul id="dropdown_browse" class="dropdown-content">
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Category</a></li>
+        <li><a href="#">Games</a></li>
+      </ul>
+      <nav>
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo center">Google Vision - ExpressJS</a>
+        </div>
+      </nav>
+    </div>
+    <div class="container">
+      <div class="row">
+        &nbsp;
+      </div>
+      <div class="row">
+        <form class="col m12 center" action="#" enctype="multipart/form-data" method="POST">
+            <div class="file-field input-field">
+                <div class="btn">
+                    <i class="material-icons left">cloud_upload</i>
+                    <span>Image</span>
+                    <input type="file">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m3">
+                    <input id="FACE_DETECTION" name="features[]" type="checkbox" value="FACE_DETECTION">
+                    <label for="FACE_DETECTION">FACE_DETECTION</label>
+                    <input id="LANDMARK_DETECTION" name="features[]" type="checkbox" value="LANDMARK_DETECTION">
+                    <label for="LANDMARK_DETECTION">LANDMARK_DETECTION</label>
+                    <input id="LOGO_DETECTION" name="features[]" type="checkbox" value="LOGO_DETECTION">
+                    <label for="LOGO_DETECTION">LOGO_DETECTION</label> 
+                </div>
+                <div class="col m3">
+                    <input id="TEXT_DETECTION" name="features[]" type="checkbox" value="TEXT_DETECTION">
+                    <label for="TEXT_DETECTION">TEXT_DETECTION</label>
+                    <input id="DOCUMENT_TEXT_DETECTION" name="features[]" type="checkbox" value="DOCUMENT_TEXT_DETECTION">
+                    <label for="DOCUMENT_TEXT_DETECTION">DOCUMENT_TEXT_DETECTION</label>
+                    <input id="SAFE_SEARCH_DETECTION" name="features[]" type="checkbox" value="SAFE_SEARCH_DETECTION">
+                    <label for="SAFE_SEARCH_DETECTION">SAFE_SEARCH_DETECTION</label>     
+                </div>
+                <div class="col m3">
+                    <input id="CROP_HINTS" name="features[]" type="checkbox" value="CROP_HINTS">
+                    <label for="CROP_HINTS">CROP_HINTS</label>
+                    <input id="WEB_DETECTION" name="features[]" type="checkbox" value="WEB_DETECTION">
+                    <label for="WEB_DETECTION">WEB_DETECTION</label>
+                    <input id="LABEL_DETECTION" name="features[]" type="checkbox" value="LABEL_DETECTION">
+                    <label for="LABEL_DETECTION">LABEL_DETECTION</label>
+                </div>
+                <div class="col m3">
+                    <input id="IMAGE_PROPERTIES" name="features[]" type="checkbox" value="IMAGE_PROPERTIES">
+                    <label for="IMAGE_PROPERTIES">IMAGE_PROPERTIES</label>
+                </div>
+            </div>
+            <div class="section">
+                <button type="submit" id="process" class="waves-effect waves-light btn-large"><i class="material-icons left">visibility</i>Process</button>
+            </div>
+        </form>
+      </div>
+      <div class="row">
+            <div class="col m12 center" id="loader" style="display:none;">
+                <div class="preloader-wrapper big active">
+                    <div class="spinner-layer spinner-blue">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+
+                    <div class="spinner-layer spinner-red">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+
+                    <div class="spinner-layer spinner-yellow">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+
+                    <div class="spinner-layer spinner-green">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col m12 center" id="result">
+                
+            </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="../js/materialize.min.js"></script>
+  <script type="text/javascript" src="../js/app.js"></script>
+</html>
