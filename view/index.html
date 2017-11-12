@@ -28,7 +28,7 @@
         &nbsp;
       </div>
       <div class="row">
-        <form class="col m12 center" action="#" enctype="multipart/form-data" method="POST">
+        <form class="col m12" action="#" enctype="multipart/form-data" method="POST">
             <div class="file-field input-field">
                 <div class="btn">
                     <i class="material-icons left">cloud_upload</i>
@@ -69,7 +69,7 @@
                     <label for="IMAGE_PROPERTIES">IMAGE_PROPERTIES</label>
                 </div>
             </div>
-            <div class="section">
+            <div class="section center">
                 <button type="submit" id="process" class="waves-effect waves-light btn-large"><i class="material-icons left">visibility</i>Process</button>
             </div>
         </form>
@@ -127,33 +127,49 @@
                 </div>
             </div>
             <div class="col m12 center" id="result">
-                    <div class="card" id="web-detection">
-                        <div class="card-content">
-                            <p><b>Web Detection</b> - Search the Internet for similar images.</p>
+                <div class="card" id="web-detection">
+                    <div class="card-content">
+                        <p><b>Web Detection</b> - Search the Internet for similar images.</p>
+                    </div>
+                    <div class="card-tabs">
+                        <ul class="tabs tabs-fixed-width">
+                            <li class="tab"><a href="#tab1">Web Entities</a></li>
+                            <li class="tab"><a href="#tab2">Pages with Matched Images</a></li>
+                            <li class="tab"><a href="#tab3">Fully Matched Images</a></li>
+                            <li class="tab"><a href="#tab4">Partially Matched Images</a></li>
+                        </ul>
+                    </div>
+                    <div class="card-content grey lighten-4">
+                        <div id="tab1">
+                            <ul class="collection" id="web-entities"></ul>
                         </div>
-                        <div class="card-tabs">
-                            <ul class="tabs tabs-fixed-width">
-                                <li class="tab"><a href="#tab1">Web Entities</a></li>
-                                <li class="tab"><a href="#tab2">Pages with Matched Images</a></li>
-                                <li class="tab"><a href="#tab3">Fully Matched Images</a></li>
-                                <li class="tab"><a href="#tab4">Partially Matched Images</a></li>
-                            </ul>
+                        <div id="tab2">
+                            <ul class="collection" id="web-pages-matched"></ul>
                         </div>
-                        <div class="card-content grey lighten-4">
-                            <div id="tab1">
-                                <ul class="collection" id="web-entities"></ul>
-                            </div>
-                            <div id="tab2">
-                                <ul class="collection" id="web-pages-matched"></ul>
-                            </div>
-                            <div id="tab3">
-                                <ul class="collection" id="web-fully-matched"></ul>
-                            </div>
-                            <div id="tab4">
-                                <ul class="collection" id="web-partial-matched"></ul>
+                        <div id="tab3">
+                            <ul class="collection" id="web-fully-matched"></ul>
+                        </div>
+                        <div id="tab4">
+                            <ul class="collection" id="web-partial-matched"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" id="label-detection">
+                    <div class="card-content">
+                        <p><b>Label Detection</b> - Detect broad sets of categories within an image, ranging from modes of transportation to animals.</p>
+                    </div>
+                    <div class="card-content grey lighten-4">
+                        <div class="row" id="label-detection-result">
+                            <div id="label-detection-template" class="col m6 offset-m3" style="display:none;">
+                                <div class="left">Label</div>
+                                <div class="right">Percent</div>
+                                <div class="progress">
+                                    <div class="determinate"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
       </div>
     </div>
