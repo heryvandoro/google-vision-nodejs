@@ -65,6 +65,10 @@ $(document).ready(()=>{
             $("#safe-detection-result").append('<a href="#" class="collection-item"><span data-badge-caption="" class="new badge '+color+'">'+data[x]+'</span>'+x.capitalize()+'</a>');
         });
     }
+
+    function doTextDetection(data){
+        $("#text-detection-result").text(data.text);
+    }
     
     $("form").submit((e)=>{
         makeRequest("POST", "/proceed", $("form").serialize()).then((res)=>{
@@ -73,6 +77,7 @@ $(document).ready(()=>{
             doWebDetection(res.body.webDetection);  
             doLabelDetection(res.body.labelAnnotations);
             doSafeSearchDetection(res.body.safeSearchAnnotation);
+            doTextDetection(res.body.fullTextAnnotation);
             slider.hide();
         },(err)=>{
             slider.hide();
