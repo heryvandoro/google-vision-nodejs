@@ -28,10 +28,6 @@ $(document).ready(()=>{
         return '#' + (0x1000000 + rgb).toString(16).slice(1)
     }
 
-    function doFaceDetection(data){
-
-    }
-
     function doWebDetection(data){
         $("#web-detection ul.collection").html("");
         $("#web-detection").show();
@@ -64,18 +60,24 @@ $(document).ready(()=>{
         });
     }
 
+    function getBadgeColor(type){
+        var color = "";
+        switch(type){
+            case "VERY_LIKELY" : color="red darken-4"; break;
+            case "LIKELY" : color="red darken-1"; break;
+            case "POSSIBLE" : color="orange darken-3"; break;
+            case "UNLIKELY" : color="teal darken-1"; break;
+            case "VERY_UNLIKELY" : color="teal darken-4"; break;
+            default : color="black"; break;
+        }
+        return color;
+    }
+
     function doSafeSearchDetection(data){
         $("#safe-detection-result").html("");
         $("#safe-detection").show();
         Object.keys(data).forEach((x)=>{
-            switch(data[x]){
-                case "VERY_LIKELY" : color="red darken-4"; break;
-                case "LIKELY" : color="red darken-1"; break;
-                case "POSSIBLE" : color="orange darken-3"; break;
-                case "UNLIKELY" : color="teal darken-1"; break;
-                case "VERY_UNLIKELY" : color="teal darken-4"; break;
-                default : color="black"; break;
-            }
+            var color = getBadgeColor(data[x]);
             $("#safe-detection-result").append('<a href="#" class="collection-item"><span data-badge-caption="" class="new badge '+color+'">'+data[x]+'</span>'+x.capitalize()+'</a>');
         });
     }
@@ -119,6 +121,78 @@ $(document).ready(()=>{
         });
     }
 
+    function doFaceDetection(imageData, data){
+        $("#face-detection-description").html("");
+        $("#face-detection").show();
+        var canvas = $("#face-detection-result")[0];
+        var ctx = canvas.getContext("2d");
+
+        var img = new Image();
+        img.src = imageData;
+
+        img.onload = ()=>{
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            ctx.strokeStyle = "#6fff20";
+            ctx.fillStyle = "#6fff20";
+            
+            data.forEach((x, y)=>{
+                //boundingPoly
+                var verticates = x.boundingPoly.vertices;
+                ctx.beginPath();
+                ctx.moveTo(verticates[0].x, verticates[0].y)
+                x.boundingPoly.vertices.forEach((point)=>{
+                    ctx.lineTo(point.x, point.y);
+                });
+                ctx.lineTo(verticates[0].x, verticates[0].y)
+                ctx.stroke();
+                ctx.closePath();
+
+                //fdBoundingPoly
+                var FDverticates = x.fdBoundingPoly.vertices;
+                ctx.beginPath();
+               
+                ctx.moveTo(FDverticates[0].x, FDverticates[0].y)
+                x.fdBoundingPoly.vertices.forEach((point)=>{
+                    ctx.lineTo(point.x, point.y);
+                });
+                ctx.lineTo(FDverticates[0].x, FDverticates[0].y)
+                ctx.stroke();
+                ctx.closePath();
+
+                //landmarks
+                x.landmarks.forEach((p)=>{
+                    ctx.beginPath();
+                    ctx.arc(p.position.x, p.position.y, 1, 0, 2 * Math.PI);
+                    ctx.stroke();
+                    ctx.closePath();
+                });
+                
+                //text
+                ctx.font="12px Roboto";
+                var textX = FDverticates[0].x+5;
+                var textY = FDverticates[0].y-5 < 5 ? FDverticates[0].y+10 : FDverticates[0].y-5;
+                ctx.fillText("Face : "+(y+1), textX, textY);
+
+                var temp = '<div class="col m4">';
+                temp+='<blockquote>Person : '+(y+1)+' ('+(x.detectionConfidence*100).round(2)+'%)</blockquote>';
+                temp+='<ul class="collection">';
+                Object.keys(x).forEach((hood)=>{
+                    if(typeof(x[hood])=="string"){
+                        var color = getBadgeColor(x[hood]);
+                        temp+='<a href="#" class="collection-item"><span data-badge-caption="" class="new badge '+color+'">'+x[hood]+'</span>'+hood.capitalize()+'</a>';
+                    }
+                });
+                temp+='</ul>';
+                temp+='<blockquote>Angle : Pan ('+x.panAngle.round(0)+'°) Roll ('+x.rollAngle.round(0)+'°) Tilt ('+x.tiltAngle
+                .round(0)+'°)</blockquote>';
+                temp+='</div>';
+                $("#face-detection-description").append(temp);
+            })
+        }
+    }
+
     $(document).on("mouseover", "#image-properties-result>div", function(){
         var RGB = $(this).css("backgroundColor").replace("rgb", "").replace("(", "").replace(")", "");
         var splitted = RGB.split(",");
@@ -137,6 +211,7 @@ $(document).ready(()=>{
             if($.inArray("LANDMARK_DETECTION", res.features)!=-1) doLandmarkDetection(res.body.landmarkAnnotations);
             if($.inArray("LOGO_DETECTION", res.features)!=-1) doLogoDetection(res.body.logoAnnotations);
             if($.inArray("IMAGE_PROPERTIES", res.features)!=-1) doImagePropertiesDetection(res.body.imagePropertiesAnnotation);
+            if($.inArray("FACE_DETECTION", res.features)!=-1) doFaceDetection(res.imageUrl, res.body.faceAnnotations);
             slider.hide();
         },(err)=>{
             slider.hide();

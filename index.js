@@ -38,6 +38,7 @@ app.post("/proceed", (req, res)=>{
         var result = {};
         result.features = req.body.features;
         result.body = response[0];
+        result.imageUrl = req.body.image_url;
         return res.send(result);
     });
 });
