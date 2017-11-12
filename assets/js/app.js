@@ -95,6 +95,14 @@ $(document).ready(()=>{
             $("#landmark-detection-result").append(temp);
         })
     }
+
+    function doLogoDetection(data){
+        $("#logo-detection ul.collection").html("");
+        $("#logo-detection").show();
+        data.forEach((x)=>{
+            $("#logo-detection-result").append('<a target="_blank" href="https://www.google.com/search?q='+x.description+' logos" class="collection-item">'+x.description+' ('+(x.score*100).round(2)+'%)</a>');
+        });
+    }
     
     $("form").submit((e)=>{
         makeRequest("POST", "/proceed", $("form").serialize()).then((res)=>{
@@ -105,6 +113,7 @@ $(document).ready(()=>{
             if($.inArray("SAFE_SEARCH_DETECTION", res.features)!=-1) doSafeSearchDetection(res.body.safeSearchAnnotation);
             if($.inArray("TEXT_DETECTION", res.features)!=-1) doTextDetection(res.body.fullTextAnnotation);
             if($.inArray("LANDMARK_DETECTION", res.features)!=-1) doLandmarkDetection(res.body.landmarkAnnotations);
+            if($.inArray("LOGO_DETECTION", res.features)!=-1) doLogoDetection(res.body.logoAnnotations);
             slider.hide();
         },(err)=>{
             slider.hide();
