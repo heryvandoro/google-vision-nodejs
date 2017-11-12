@@ -127,12 +127,38 @@
                 </div>
             </div>
             <div class="col m12 center" id="result">
-                
+                    <div class="card" id="web-detection">
+                        <div class="card-content">
+                            <p><b>Web Detection</b> - Search the Internet for similar images.</p>
+                        </div>
+                        <div class="card-tabs">
+                            <ul class="tabs tabs-fixed-width">
+                                <li class="tab"><a href="#tab1">Web Entities</a></li>
+                                <li class="tab"><a href="#tab2">Pages with Matched Images</a></li>
+                                <li class="tab"><a href="#tab3">Fully Matched Images</a></li>
+                                <li class="tab"><a href="#tab4">Partially Matched Images</a></li>
+                            </ul>
+                        </div>
+                        <div class="card-content grey lighten-4">
+                            <div id="tab1">
+                                <ul class="collection" id="web-entities"></ul>
+                            </div>
+                            <div id="tab2">
+                                <ul class="collection" id="web-pages-matched"></ul>
+                            </div>
+                            <div id="tab3">
+                                <ul class="collection" id="web-fully-matched"></ul>
+                            </div>
+                            <div id="tab4">
+                                <ul class="collection" id="web-partial-matched"></ul>
+                            </div>
+                        </div>
+                    </div>
             </div>
       </div>
     </div>
   </body>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="../js/materialize.min.js"></script>
   <script type="text/javascript" src="../js/app.js"></script>
 </html>

@@ -1,6 +1,5 @@
 $(document).ready(()=>{
     var slider = $("#loader");
-    var result = $("#result");
 
     function makeRequest(method, url, data){
         return $.ajax({
@@ -16,38 +15,29 @@ $(document).ready(()=>{
     function doFaceDetection(data){
 
     }
+
+    function doWebDetection(data){
+        data.webEntities.forEach((x)=>{
+            $("#web-entities").append('<a target="_blank" href="https://www.google.com/search?q='+x.description+'" class="collection-item">'+x.description+'</a>');
+        });
+        data.pagesWithMatchingImages.forEach((x)=>{
+            $("#web-pages-matched").append('<a target="_blank" href="'+x.url+'" class="collection-item">'+x.url+'</a>');
+        });
+        data.fullMatchingImages.forEach((x)=>{
+            $("#web-fully-matched").append('<a target="_blank" href="'+x.url+'" class="collection-item">'+x.url+'</a>');
+        });
+        data.partialMatchingImages.forEach((x)=>{
+            $("#web-partial-matched").append('<a target="_blank" href="'+x.url+'" class="collection-item">'+x.url+'</a>');
+        });
+    }
     
     $("form").submit((e)=>{
         makeRequest("POST", "/proceed", $("form").serialize()).then((res)=>{
-            slider.hide();
-            console.log(res)
-            //clear result
-            result.html("");
+            console.log(res);
+            doFaceDetection(res.body.faceAnnotations);
+            doWebDetection(res.body.webDetection);  
 
-            res.features.forEach((x)=>{
-                switch(x){
-                    case "FACE_DETECTION" : doFaceDetection(res.body.faceAnnotations);
-                    break;
-                    case "LANDMARK_DETECTION" : 
-                    break;
-                    case "LOGO_DETECTION" : 
-                    break;
-                    case "TEXT_DETECTION" : 
-                    break;
-                    case "DOCUMENT_TEXT_DETECTION" : 
-                    break;
-                    case "SAFE_SEARCH_DETECTION" : 
-                    break;
-                    case "CROP_HINTS" : 
-                    break;
-                    case "WEB_DETECTION" : 
-                    break;
-                    case "LABEL_DETECTION" : 
-                    break;
-                    case "IMAGE_PROPERTIES" : 
-                    break;
-                }
-            })           
+            slider.hide();
         },(err)=>{
             slider.hide();
             console.log(err)
