@@ -1,25 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Google Vision - ExpressJS</title>
+    <title>Google Vision - ExpressJS, jQuery, Materialize</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="../css/materialize.min.css"  media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
   <body>
     <div class="navbar-fixed">
-      <ul id="dropdown_accounts" class="dropdown-content">
-        <li><a href="#">Users</a></li>
-        <li><a href="#">Groups</a></li>
-      </ul>
-      <ul id="dropdown_browse" class="dropdown-content">
-        <li><a href="#">Products</a></li>
-        <li><a href="#">Category</a></li>
-        <li><a href="#">Games</a></li>
-      </ul>
       <nav>
         <div class="nav-wrapper">
-          <a href="#" class="brand-logo center">Google Vision - ExpressJS</a>
+          <a href="#" class="brand-logo center">Google Vision Demo</a>
         </div>
       </nav>
     </div>
@@ -63,6 +54,9 @@
                     <input id="CROP_HINTS" name="features[]" type="checkbox" value="CROP_HINTS" disabled>
                     <label for="CROP_HINTS">CROP_HINTS</label>
                 </div>
+            </div>
+            <div class="section">
+                <blockquote>DOCUMENT_TEXT_DETECTION and CROP_HINTS features coming soon! These two features not useful for me, but i will make it someday :)</blockquote>
             </div>
             <div class="section center">
                 <button type="submit" id="process" class="waves-effect waves-light btn-large"><i class="material-icons left">visibility</i>Proceed</button>
@@ -218,6 +212,22 @@
             </div>
       </div>
     </div>
+    <footer class="page-footer">    
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Google Vision Demo</h5>
+                    <p class="grey-text text-lighten-4">Just a demo web to introduce google vision features. Made with ExpressJS (Node JS framework), jQuery, MaterializeCSS and <strike>fingers</strike>. Feel free to contact me if you need some "help" :)</p>
+                    Fork : <a class="white-text" target="_blank" href="https://github.com/heryvandoro/google-vision-nodejs">https://github.com/heryvandoro/google-vision-nodejs</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2017 - <a class="white-text" target="_blank" href="https://www.facebook.com/vandoro">Hery Vandoro</a><a target="_blank" class="grey-text text-lighten-4 right" href="https://www.mahirkoding.com/">My Blog</a>
+            </div>
+        </div>
+    </footer>
   </body>
   <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="../js/materialize.min.js"></script>
