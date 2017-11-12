@@ -48,20 +48,20 @@
                     <label for="WEB_DETECTION">WEB_DETECTION</label>
                     <input id="LABEL_DETECTION" name="features[]" type="checkbox" value="LABEL_DETECTION">
                     <label for="LABEL_DETECTION">LABEL_DETECTION</label>
-                    <input id="CROP_HINTS" name="features[]" type="checkbox" value="CROP_HINTS">
-                    <label for="CROP_HINTS">CROP_HINTS</label>
-                </div>
-                <div class="col m3">
-                    <input id="DOCUMENT_TEXT_DETECTION" name="features[]" type="checkbox" value="DOCUMENT_TEXT_DETECTION">
-                    <label for="DOCUMENT_TEXT_DETECTION">DOCUMENT_TEXT_DETECTION</label>
                     <input id="LOGO_DETECTION" name="features[]" type="checkbox" value="LOGO_DETECTION">
                     <label for="LOGO_DETECTION">LOGO_DETECTION</label> 
-                    <input id="FACE_DETECTION" name="features[]" type="checkbox" value="FACE_DETECTION">
-                    <label for="FACE_DETECTION">FACE_DETECTION</label>
                 </div>
                 <div class="col m3">
                     <input id="IMAGE_PROPERTIES" name="features[]" type="checkbox" value="IMAGE_PROPERTIES">
                     <label for="IMAGE_PROPERTIES">IMAGE_PROPERTIES</label>
+                    <input id="DOCUMENT_TEXT_DETECTION" name="features[]" type="checkbox" value="DOCUMENT_TEXT_DETECTION" disabled>
+                    <label for="DOCUMENT_TEXT_DETECTION">DOCUMENT_TEXT_DETECTION</label>
+                    <input id="FACE_DETECTION" name="features[]" type="checkbox" value="FACE_DETECTION" disabled>
+                    <label for="FACE_DETECTION">FACE_DETECTION</label>
+                </div>
+                <div class="col m3">
+                    <input id="CROP_HINTS" name="features[]" type="checkbox" value="CROP_HINTS" disabled>
+                    <label for="CROP_HINTS">CROP_HINTS</label>
                 </div>
             </div>
             <div class="section center">
@@ -195,6 +195,15 @@
                     </div>
                     <div class="card-content grey lighten-4">
                         <ul class="collection" id="logo-detection-result"></ul>
+                    </div>
+                </div>
+                <div class="card" id="image-properties-detection">
+                    <div class="card-content center">
+                        <p><b>Image Properties Detection</b> - Detect general attributes of the image, such as dominant colors.</p>
+                    </div>
+                    <div class="card-content grey lighten-4">
+                        <div class="row" id="image-properties-result"></div>
+                        <blockquote id="image-properties-picker"></blockquote>
                     </div>
                 </div>
             </div>

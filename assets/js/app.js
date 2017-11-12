@@ -23,6 +23,11 @@ $(document).ready(()=>{
         return +(Math.round(this + ("e+"+num))  + ("e-"+num));
     }
 
+    function rgb2hex(red, green, blue) {
+        var rgb = blue | (green << 8) | (red << 16);
+        return '#' + (0x1000000 + rgb).toString(16).slice(1)
+    }
+
     function doFaceDetection(data){
 
     }
@@ -103,6 +108,23 @@ $(document).ready(()=>{
             $("#logo-detection-result").append('<a target="_blank" href="https://www.google.com/search?q='+x.description+' logos" class="collection-item">'+x.description+' ('+(x.score*100).round(2)+'%)</a>');
         });
     }
+
+    function doImagePropertiesDetection(data){
+        $("#image-properties-result").html("");
+        $("#image-properties-detection").show();
+        var calc = 0;
+        data.dominantColors.colors.forEach((x)=>{ calc+=x.pixelFraction; });
+        data.dominantColors.colors.forEach((x)=>{
+            $("#image-properties-result").append('<div style="display:inline-block;height:200px;width:'+((x.pixelFraction*100)/calc)+'%;background-color:rgb('+x.color.red+','+x.color.green+','+x.color.blue+')">&nbsp;</div>');
+        });
+    }
+
+    $(document).on("mouseover", "#image-properties-result>div", function(){
+        var RGB = $(this).css("backgroundColor").replace("rgb", "").replace("(", "").replace(")", "");
+        var splitted = RGB.split(",");
+        var HEX = rgb2hex(splitted[0], splitted[1], splitted[2]);
+        $("#image-properties-picker").html("RGB : "+RGB+"<br>HEX : "+HEX);
+    });
     
     $("form").submit((e)=>{
         makeRequest("POST", "/proceed", $("form").serialize()).then((res)=>{
@@ -114,6 +136,7 @@ $(document).ready(()=>{
             if($.inArray("TEXT_DETECTION", res.features)!=-1) doTextDetection(res.body.fullTextAnnotation);
             if($.inArray("LANDMARK_DETECTION", res.features)!=-1) doLandmarkDetection(res.body.landmarkAnnotations);
             if($.inArray("LOGO_DETECTION", res.features)!=-1) doLogoDetection(res.body.logoAnnotations);
+            if($.inArray("IMAGE_PROPERTIES", res.features)!=-1) doImagePropertiesDetection(res.body.imagePropertiesAnnotation);
             slider.hide();
         },(err)=>{
             slider.hide();
