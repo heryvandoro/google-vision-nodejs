@@ -51,6 +51,20 @@ $(document).ready(()=>{
             $("#label-detection-result").append(temp);
         })
     }
+
+    function doSafeSearchDetection(data){
+        Object.keys(data).forEach((x)=>{
+            switch(data[x]){
+                case "VERY_LIKELY" : color="red darken-4"; break;
+                case "LIKELY" : color="red darken-1"; break;
+                case "POSSIBLE" : color="orange darken-3"; break;
+                case "UNLIKELY" : color="teal darken-1"; break;
+                case "VERY_UNLIKELY" : color="teal darken-4"; break;
+                default : color="black"; break;
+            }
+            $("#safe-detection-result").append('<a href="#" class="collection-item"><span data-badge-caption="" class="new badge '+color+'">'+data[x]+'</span>'+x.capitalize()+'</a>');
+        });
+    }
     
     $("form").submit((e)=>{
         makeRequest("POST", "/proceed", $("form").serialize()).then((res)=>{
@@ -58,6 +72,7 @@ $(document).ready(()=>{
             doFaceDetection(res.body.faceAnnotations);
             doWebDetection(res.body.webDetection);  
             doLabelDetection(res.body.labelAnnotations);
+            doSafeSearchDetection(res.body.safeSearchAnnotation);
             slider.hide();
         },(err)=>{
             slider.hide();
