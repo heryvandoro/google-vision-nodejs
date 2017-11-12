@@ -29,6 +29,7 @@ $(document).ready(()=>{
 
     function doWebDetection(data){
         $("#web-detection ul.collection").html("");
+        $("#web-detection").show();
         data.webEntities.forEach((x)=>{
             $("#web-entities").append('<a target="_blank" href="https://www.google.com/search?q='+x.description+'" class="collection-item">'+x.description+'</a>');
         });
@@ -41,11 +42,11 @@ $(document).ready(()=>{
         data.partialMatchingImages.forEach((x)=>{
             $("#web-partial-matched").append('<a target="_blank" href="'+x.url+'" class="collection-item">'+x.url+'</a>');
         });
-        $("#web-detection").show();
     }
 
     function doLabelDetection(data){
         $("#label-detection-result>div:not(#label-detection-template)").remove();
+        $("#label-detection").show();
         data.forEach((x)=>{
             var temp = $("#label-detection-template").clone();
             temp.show();
@@ -56,11 +57,11 @@ $(document).ready(()=>{
             temp.find("div.determinate").css("width",score+'%');
             $("#label-detection-result").append(temp);
         });
-        $("#label-detection").show();
     }
 
     function doSafeSearchDetection(data){
         $("#safe-detection-result").html("");
+        $("#safe-detection").show();
         Object.keys(data).forEach((x)=>{
             switch(data[x]){
                 case "VERY_LIKELY" : color="red darken-4"; break;
@@ -72,17 +73,17 @@ $(document).ready(()=>{
             }
             $("#safe-detection-result").append('<a href="#" class="collection-item"><span data-badge-caption="" class="new badge '+color+'">'+data[x]+'</span>'+x.capitalize()+'</a>');
         });
-        $("#safe-detection").show();
     }
 
     function doTextDetection(data){
+        $("#text-detection").show();
         if(data==null) return;
         $("#text-detection-result").text(data.text);
-        $("#text-detection").show();
     }
 
     function doLandmarkDetection(data){
         $("#landmark-detection-result").html("");
+        $("#landmark-detection").show();
         if(data.length==0) return;
         data.forEach((x)=>{
             var temp = '<div class="col m6">';
@@ -93,7 +94,6 @@ $(document).ready(()=>{
             temp+='</div></div>';
             $("#landmark-detection-result").append(temp);
         })
-        $("#landmark-detection").show();
     }
     
     $("form").submit((e)=>{

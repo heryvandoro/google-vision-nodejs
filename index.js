@@ -31,7 +31,7 @@ app.get("/", (req, res)=>{
 app.post("/proceed", (req, res)=>{
     vision.annotateImage({
         image : {
-            source: { imageUri: 'http://ilmupengetahuanumum.com/wp-content/uploads/2014/12/7-keajaiban-Dunia-terbaru.jpg' }
+            source: { imageUri: req.body.image_url }
         },
         features : getFeatures(req.body.features)
     }).then(response => {

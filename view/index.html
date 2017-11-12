@@ -29,15 +29,10 @@
       </div>
       <div class="row">
         <form class="col m12" action="#" enctype="multipart/form-data" method="POST">
-            <div class="file-field input-field">
-                <div class="btn">
-                    <i class="material-icons left">cloud_upload</i>
-                    <span>Image</span>
-                    <input type="file">
-                </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text">
-                </div>
+            <div class="input-field">
+                <i class="material-icons prefix">insert_link</i>
+                <input name="image_url" type="text" placeholder="ex : https://us-east-1.tchyn.io/snopes-production/uploads/2016/08/panda.jpg">
+                <label>Input Image URL</label>
             </div>
             <div class="row">
                 <div class="col m3">
@@ -70,7 +65,7 @@
                 </div>
             </div>
             <div class="section center">
-                <button type="submit" id="process" class="waves-effect waves-light btn-large"><i class="material-icons left">visibility</i>Process</button>
+                <button type="submit" id="process" class="waves-effect waves-light btn-large"><i class="material-icons left">visibility</i>Proceed</button>
             </div>
         </form>
       </div>
