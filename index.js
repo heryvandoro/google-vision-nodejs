@@ -31,7 +31,7 @@ app.get("/", (req, res)=>{
 app.post("/proceed", (req, res)=>{
     vision.annotateImage({
         image : {
-            source: { imageUri: 'https://peopledotcom.files.wordpress.com/2017/11/justin-bieber-selena-gomez.jpg' }
+            source: { imageUri: 'http://ilmupengetahuanumum.com/wp-content/uploads/2014/12/7-keajaiban-Dunia-terbaru.jpg' }
         },
         features : getFeatures(req.body.features)
     }).then(response => {

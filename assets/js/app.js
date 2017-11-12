@@ -1,5 +1,6 @@
 $(document).ready(()=>{
     var slider = $("#loader");
+    var API_KEY_MAPS = "AIzaSyBPjw-o1sdleDZ7N3nxxJWhd9k1TX8z1Pk";
 
     function makeRequest(method, url, data){
         return $.ajax({
@@ -69,6 +70,18 @@ $(document).ready(()=>{
     function doTextDetection(data){
         $("#text-detection-result").text(data.text);
     }
+
+    function doLandmarkDetection(data){
+        data.forEach((x)=>{
+            var temp = '<div class="col m6">';
+            temp+='<h5 class="center">'+x.description+' : '+(x.score*100).round(2)+'%</h5>';
+            temp+='<div class="video-container">';
+            var location = x.locations[0].latLng;            
+            temp+='<iframe src="https://www.google.com/maps/embed/v1/view?key='+API_KEY_MAPS+'&center='+location.latitude+','+location.longitude+'&zoom=18&maptype=satellite"></iframe>';
+            temp+='</div></div>';
+            $("#landmark-detection-result").append(temp);
+        })
+    }
     
     $("form").submit((e)=>{
         makeRequest("POST", "/proceed", $("form").serialize()).then((res)=>{
@@ -77,7 +90,8 @@ $(document).ready(()=>{
             doWebDetection(res.body.webDetection);  
             doLabelDetection(res.body.labelAnnotations);
             doSafeSearchDetection(res.body.safeSearchAnnotation);
-            doTextDetection(res.body.fullTextAnnotation);
+           // doTextDetection(res.body.fullTextAnnotation);
+            doLandmarkDetection(res.body.landmarkAnnotations);
             slider.hide();
         },(err)=>{
             slider.hide();
