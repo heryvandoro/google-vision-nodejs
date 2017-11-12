@@ -2,6 +2,8 @@ $(document).ready(()=>{
     var slider = $("#loader");
     var API_KEY_MAPS = "AIzaSyBPjw-o1sdleDZ7N3nxxJWhd9k1TX8z1Pk";
 
+    $("#result>div").hide();
+
     function makeRequest(method, url, data){
         return $.ajax({
             method : method,
@@ -26,6 +28,7 @@ $(document).ready(()=>{
     }
 
     function doWebDetection(data){
+        $("#web-detection ul.collection").html("");
         data.webEntities.forEach((x)=>{
             $("#web-entities").append('<a target="_blank" href="https://www.google.com/search?q='+x.description+'" class="collection-item">'+x.description+'</a>');
         });
@@ -38,9 +41,11 @@ $(document).ready(()=>{
         data.partialMatchingImages.forEach((x)=>{
             $("#web-partial-matched").append('<a target="_blank" href="'+x.url+'" class="collection-item">'+x.url+'</a>');
         });
+        $("#web-detection").show();
     }
 
     function doLabelDetection(data){
+        $("#label-detection-result>div:not(#label-detection-template)").remove();
         data.forEach((x)=>{
             var temp = $("#label-detection-template").clone();
             temp.show();
@@ -50,10 +55,12 @@ $(document).ready(()=>{
             temp.find("div.right").text(score);
             temp.find("div.determinate").css("width",score+'%');
             $("#label-detection-result").append(temp);
-        })
+        });
+        $("#label-detection").show();
     }
 
     function doSafeSearchDetection(data){
+        $("#safe-detection-result").html("");
         Object.keys(data).forEach((x)=>{
             switch(data[x]){
                 case "VERY_LIKELY" : color="red darken-4"; break;
@@ -65,33 +72,39 @@ $(document).ready(()=>{
             }
             $("#safe-detection-result").append('<a href="#" class="collection-item"><span data-badge-caption="" class="new badge '+color+'">'+data[x]+'</span>'+x.capitalize()+'</a>');
         });
+        $("#safe-detection").show();
     }
 
     function doTextDetection(data){
+        if(data==null) return;
         $("#text-detection-result").text(data.text);
+        $("#text-detection").show();
     }
 
     function doLandmarkDetection(data){
+        $("#landmark-detection-result").html("");
+        if(data.length==0) return;
         data.forEach((x)=>{
             var temp = '<div class="col m6">';
-            temp+='<h5 class="center">'+x.description+' : '+(x.score*100).round(2)+'%</h5>';
+            temp+='<blockquote>'+x.description+' : '+(x.score*100).round(2)+'%</blockquote>';
             temp+='<div class="video-container">';
             var location = x.locations[0].latLng;            
             temp+='<iframe src="https://www.google.com/maps/embed/v1/view?key='+API_KEY_MAPS+'&center='+location.latitude+','+location.longitude+'&zoom=18&maptype=satellite"></iframe>';
             temp+='</div></div>';
             $("#landmark-detection-result").append(temp);
         })
+        $("#landmark-detection").show();
     }
     
     $("form").submit((e)=>{
         makeRequest("POST", "/proceed", $("form").serialize()).then((res)=>{
-            console.log(res);
-            doFaceDetection(res.body.faceAnnotations);
-            doWebDetection(res.body.webDetection);  
-            doLabelDetection(res.body.labelAnnotations);
-            doSafeSearchDetection(res.body.safeSearchAnnotation);
-           // doTextDetection(res.body.fullTextAnnotation);
-            doLandmarkDetection(res.body.landmarkAnnotations);
+            $("#result>div").hide();
+            console.log(res)
+            if($.inArray("WEB_DETECTION", res.features)!=-1) doWebDetection(res.body.webDetection);
+            if($.inArray("LABEL_DETECTION", res.features)!=-1) doLabelDetection(res.body.labelAnnotations);
+            if($.inArray("SAFE_SEARCH_DETECTION", res.features)!=-1) doSafeSearchDetection(res.body.safeSearchAnnotation);
+            if($.inArray("TEXT_DETECTION", res.features)!=-1) doTextDetection(res.body.fullTextAnnotation);
+            if($.inArray("LANDMARK_DETECTION", res.features)!=-1) doLandmarkDetection(res.body.landmarkAnnotations);
             slider.hide();
         },(err)=>{
             slider.hide();
