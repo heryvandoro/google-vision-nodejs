@@ -203,7 +203,6 @@ $(document).ready(()=>{
     $("form").submit((e)=>{
         makeRequest("POST", "/proceed", $("form").serialize()).then((res)=>{
             $("#result>div").hide();
-            console.log(res)
             if($.inArray("WEB_DETECTION", res.features)!=-1) doWebDetection(res.body.webDetection);
             if($.inArray("LABEL_DETECTION", res.features)!=-1) doLabelDetection(res.body.labelAnnotations);
             if($.inArray("SAFE_SEARCH_DETECTION", res.features)!=-1) doSafeSearchDetection(res.body.safeSearchAnnotation);
@@ -215,7 +214,7 @@ $(document).ready(()=>{
             slider.hide();
         },(err)=>{
             slider.hide();
-            console.log(err)
+            console.log(err);
         });
         e.preventDefault();
     })
